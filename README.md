@@ -1,6 +1,7 @@
 # BuycraftAPI
+![TravisCI](https://travis-ci.org/hugmanrique/BuycraftAPI.svg?branch=master)
 
-BuycraftAPI brings [Buycraft](https://buycraft.net) and Java together. This is made for developers that want to use Buycraft on their Minecraft servers just to show last donators on signs or create cool statues without using the hole Buycraft plugin.
+BuycraftAPI brings [Buycraft](https://buycraft.net) and Java together. This is made for developers that want to use Buycraft on their Minecraft servers that just want to show their lastest donators on signs or create cool statues without using the whole Buycraft plugin.
 
 ## Installation
 BuycraftAPI is distributed as a [maven](http://maven.apache.org/) project. To compile it and install it in your local Maven repository (.m2) use:
@@ -55,4 +56,4 @@ try {
 This project is licensed under the GNU General Public License. You can read all the license terms [here](LICENSE)
 
 ## Donate
-If you think this project is useful for you or your server, please, consider donating [here](https://hugmanrique.me/donar)
+If you think this project is useful for you or your server, please, consider donating [here](https://hugmanrique.me/donate/)
