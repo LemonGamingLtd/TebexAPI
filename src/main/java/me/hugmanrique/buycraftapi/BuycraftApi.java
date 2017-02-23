@@ -9,6 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -24,10 +28,10 @@ import java.util.stream.Stream;
  *         Spigot. Created the 14/05/2016.
  **/
 public class BuycraftApi {
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);;
+
     private static String url;
     private String secret;
-
-    private static final Pattern datePattern = Pattern.compile("^(\\d{1,4})-(\\d{1,2})-(\\d{1,2})T(\\d{1,2}):(\\d{1,2}):(\\d{1,2})\\+(\\d{1,4})$");
 
     /**
      * Creates a new instance of {@link BuycraftApi}
@@ -36,7 +40,7 @@ public class BuycraftApi {
      */
 
     public BuycraftApi(String secret) throws BuycraftException {
-        if (secret==null||secret.length()!=40){
+        if (secret == null || secret.length() != 40){
             throw new BuycraftException("The secret key is not valid");
         }
 
@@ -96,7 +100,7 @@ public class BuycraftApi {
     /**
      * Gets all the Categories and Packages your store has
      * @return A {@link Set<Category>} containing all the Categories (also subcategories)
-     * @see {@link Category#getSubCategories()} To see the Subcategories of a {@link Category}
+     * @see Category#getSubCategories() To see the Subcategories of a {@link Category}
      */
 
     public Set<Category> getListing(){
@@ -271,11 +275,21 @@ public class BuycraftApi {
         String playerName = JsonUtils.safeGetString(playerObj, "name");
 
         String uuidString = JsonUtils.safeGetString(playerObj, "uuid");
-        UUID uuid = uuidString==null||uuidString.isEmpty() ? null : UUID.fromString(uuidString);
+        UUID uuid = parseUuid(uuidString);
 
         JSONArray packages = JsonUtils.safeGetArray(obj, "packages");
 
         return new Payment(id, amount, date, currency, currencySymbol, playerId, playerName, uuid, getBoughtPackages(packages));
+    }
+
+    private UUID parseUuid(String text) {
+        if (text == null || text.isEmpty()) {
+            return null;
+        }
+
+        text = text.replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5");
+
+        return UUID.fromString(text);
     }
 
     private Map<Integer, String> getBoughtPackages(JSONArray array){
@@ -303,62 +317,12 @@ public class BuycraftApi {
      * @return A Date with the parsed string data or a "0" Date
      */
 
-    public Date parseDate(String string){
-        int years = 0;
-        int month = 0;
-        int day = 0;
-        int hour = 0;
-        int minute = 0;
-        int second = 0;
-        boolean found = false;
-
-        Matcher m = datePattern.matcher(string);
-
-        while (m.find()){
-            if (m.group()!=null){
-                if (m.group().isEmpty()){
-                    continue;
-                }
-
-                for (int i = 0; i<m.groupCount(); ++i){
-                    if (m.group(i)!=null&&!m.group(i).isEmpty()){
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found){
-                    continue;
-                }
-
-                if (matcherCheck(m, 1)){
-                    years = Integer.parseInt(m.group(1));
-                }
-                if (matcherCheck(m, 2)){
-                    month = Integer.parseInt(m.group(2));
-                }
-                if (matcherCheck(m, 3)){
-                    day = Integer.parseInt(m.group(3));
-                }
-                if (matcherCheck(m, 4)){
-                    hour = Integer.parseInt(m.group(4));
-                }
-                if (matcherCheck(m, 5)){
-                    minute = Integer.parseInt(m.group(5));
-                }
-                if (matcherCheck(m, 6)){
-                    second = Integer.parseInt(m.group(6));
-                }
-            }
+    private Date parseDate(String string) {
+        try {
+            return DATE_FORMAT.parse(string);
+        } catch (ParseException e) {
+            return new Date(0);
         }
-
-        Calendar c = Calendar.getInstance();
-        c.set(years, month+1, day, hour, minute, second);
-        return new Date(c.toInstant().toEpochMilli());
-    }
-
-    private boolean matcherCheck(Matcher matcher, int index){
-        return matcher.group(index)!=null&&!matcher.group(index).isEmpty();
     }
 
     /**
