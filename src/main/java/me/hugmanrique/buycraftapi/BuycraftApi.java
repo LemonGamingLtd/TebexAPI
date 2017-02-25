@@ -28,7 +28,7 @@ import java.util.stream.Stream;
  *         Spigot. Created the 14/05/2016.
  **/
 public class BuycraftApi {
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);;
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddHH:mm:ssX", Locale.ENGLISH);;
 
     private static String url;
     private String secret;
@@ -319,7 +319,7 @@ public class BuycraftApi {
 
     private Date parseDate(String string) {
         try {
-            return DATE_FORMAT.parse(string);
+            return DATE_FORMAT.parse(string.replace("T", ""));
         } catch (ParseException e) {
             return new Date(0);
         }
