@@ -1,8 +1,8 @@
 package me.hugmanrique.tebexapi.data;
 
+import java.util.LinkedHashSet;
 import me.hugmanrique.tebexapi.TebexApi;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,7 +28,7 @@ public class Category {
         this.order = order;
         this.name = name;
         this.subCategories = subCategories;
-        this.packages = new HashSet<>();
+        this.packages = new LinkedHashSet<>();
         this.onlySubCategories = true;
     }
 
@@ -37,7 +37,7 @@ public class Category {
         this.order = order;
         this.name = name;
         this.packages = packages;
-        this.subCategories = new HashSet<>();
+        this.subCategories = new LinkedHashSet<>();
         onlySubCategories = false;
     }
 

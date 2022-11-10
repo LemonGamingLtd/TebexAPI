@@ -119,9 +119,9 @@ public class TebexApi {
 
     private Set<Category> loopCategory(JSONArray array){
         if (array==null){
-            return new HashSet<>();
+            return new LinkedHashSet<>();
         }
-        Set<Category> categories = new HashSet<>();
+        Set<Category> categories = new LinkedHashSet<>();
 
         for (int i = 0; i<array.length(); i++){
             JSONObject object = JsonUtils.safeGetObject(array, i);
@@ -144,7 +144,7 @@ public class TebexApi {
 
     private Set<Package> parsePackages(JSONObject object){
         JSONArray array = JsonUtils.safeGetArray(object, "packages");
-        Set<Package> packages = new HashSet<>();
+        Set<Package> packages = new LinkedHashSet<>();
         if (array==null){
             return packages;
         }
@@ -202,7 +202,7 @@ public class TebexApi {
             checkError(obj);
 
             JSONArray array = JsonUtils.safeGetArray(obj, "commands");
-            Set<OfflineCommand> offlineCommands = new HashSet<>();
+            Set<OfflineCommand> offlineCommands = new LinkedHashSet<>();
 
             for (int i = 0; i < (array==null ? 0 : array.length()); i++){
                 offlineCommands.add(parseOfflineCmd(JsonUtils.safeGetObject(array, i)));
@@ -245,7 +245,7 @@ public class TebexApi {
             checkError(obj);
 
             JSONArray payments = JsonUtils.safeGetArray(obj, "main");
-            Set<Payment> paymentSet = new HashSet<>();
+            Set<Payment> paymentSet = new LinkedHashSet<>();
 
             for (int i = 0; i<(payments==null ? 0 : payments.length()); i++){
                 paymentSet.add(parsePayment(JsonUtils.safeGetObject(payments, i)));
