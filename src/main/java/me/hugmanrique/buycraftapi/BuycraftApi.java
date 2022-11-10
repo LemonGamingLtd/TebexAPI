@@ -161,6 +161,7 @@ public class BuycraftApi {
         int id = JsonUtils.safeGetInt(object, "id");
         int order = JsonUtils.safeGetInt(object, "order");
         String name = JsonUtils.safeGetString(object, "name");
+        String ip = JsonUtils.safeGetString(object, "ip");
         double price = Double.parseDouble(JsonUtils.safeGetString(object, "price"));
 
         JSONObject sale = JsonUtils.safeGetObject(object, "sale");
@@ -168,7 +169,7 @@ public class BuycraftApi {
         boolean saleActive = JsonUtils.safeGetBoolean(sale, "active");
         double discount = Double.parseDouble(JsonUtils.safeGetString(sale, "discount"));
 
-        return new Package(id, order, name, price, saleActive, discount);
+        return new Package(id, order, name, ip, price, saleActive, discount);
     }
 
     /**

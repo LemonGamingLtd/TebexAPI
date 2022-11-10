@@ -1,5 +1,7 @@
 package me.hugmanrique.buycraftapi.data;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Created by HugmanriqueMC. All Rights Reserved
  * The copy of this file may not be copied in any form without
@@ -9,18 +11,20 @@ package me.hugmanrique.buycraftapi.data;
  *         Spigot. Created the 14/05/2016.
  **/
 public class Package {
-    private int id;
-    private int order;
-    private String name;
-    private double price;
+    private final int id;
+    private final int order;
+    private final String name;
+    private final String ip;
+    private final double price;
 
-    private boolean inSale;
+    private final boolean inSale;
     private double discount;
 
-    public Package(int id, int order, String name, double price, boolean inSale, Double discount) {
+    public Package(int id, int order, String name, String ip, double price, boolean inSale, Double discount) {
         this.id = id;
         this.order = order;
         this.name = name;
+        this.ip = ip;
         this.price = price;
         this.inSale = inSale;
         if (inSale){
