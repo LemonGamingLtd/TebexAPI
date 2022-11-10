@@ -158,7 +158,6 @@ public class TebexApi {
         int id = JsonUtils.safeGetInt(object, "id");
         int order = JsonUtils.safeGetInt(object, "order");
         String name = JsonUtils.safeGetString(object, "name");
-        String ip = JsonUtils.safeGetString(object, "ip");
         double price = Double.parseDouble(JsonUtils.safeGetString(object, "price"));
 
         JSONObject sale = JsonUtils.safeGetObject(object, "sale");
@@ -166,7 +165,7 @@ public class TebexApi {
         boolean saleActive = JsonUtils.safeGetBoolean(sale, "active");
         double discount = Double.parseDouble(JsonUtils.safeGetString(sale, "discount"));
 
-        return new Package(id, order, name, ip, price, saleActive, discount);
+        return new Package(id, order, name, price, saleActive, discount);
     }
 
     /**
@@ -263,7 +262,6 @@ public class TebexApi {
         double amount = Double.parseDouble(JsonUtils.safeGetString(obj, "amount"));
 
         Date date = parseDate(JsonUtils.safeGetString(obj, "date"));
-
         JSONObject currencyObj = JsonUtils.safeGetObject(obj, "currency");
         String currency = JsonUtils.safeGetString(currencyObj, "iso_4217");
         String currencySymbol = JsonUtils.safeGetString(currencyObj, "symbol");
