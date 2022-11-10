@@ -42,6 +42,10 @@ public class Package {
         return name;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
     public double getPrice() {
         return price;
     }
