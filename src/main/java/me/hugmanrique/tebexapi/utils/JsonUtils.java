@@ -1,4 +1,4 @@
-package me.hugmanrique.buycraftapi.utils;
+package me.hugmanrique.tebexapi.utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;

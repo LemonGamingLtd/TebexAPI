@@ -1,4 +1,4 @@
-package me.hugmanrique.buycraftapi.exception;
+package me.hugmanrique.tebexapi.exception;
 
 /**
  * Created by HugmanriqueMC. All Rights Reserved
@@ -8,8 +8,8 @@ package me.hugmanrique.buycraftapi.exception;
  * @author Hugmanrique
  *         Spigot. Created the 14/05/2016.
  **/
-public class BuycraftException extends Exception {
-    public BuycraftException(String message){
+public class TebexException extends Exception {
+    public TebexException(String message){
         super(message);
     }
 }

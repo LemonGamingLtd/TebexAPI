@@ -1,10 +1,10 @@
-package me.hugmanrique.buycraftapi;
+package me.hugmanrique.tebexapi;
 
-import me.hugmanrique.buycraftapi.data.*;
-import me.hugmanrique.buycraftapi.data.Package;
-import me.hugmanrique.buycraftapi.exception.BuycraftException;
-import me.hugmanrique.buycraftapi.utils.JsonReader;
-import me.hugmanrique.buycraftapi.utils.JsonUtils;
+import me.hugmanrique.tebexapi.data.*;
+import me.hugmanrique.tebexapi.data.Package;
+import me.hugmanrique.tebexapi.exception.TebexException;
+import me.hugmanrique.tebexapi.utils.JsonReader;
+import me.hugmanrique.tebexapi.utils.JsonUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,20 +25,20 @@ import java.util.stream.Stream;
  *         Spigot. Created the 14/05/2016.
  **/
 public class TebexApi {
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddHH:mm:ssX", Locale.ENGLISH);;
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddHH:mm:ssX", Locale.ENGLISH);
 
     private static String url;
     private String secret;
 
     /**
      * Creates a new instance of {@link TebexApi}
-     * @param secret The Buycraft's secret key (The server secret key)
-     * @throws BuycraftException If the Secret key is not valid
+     * @param secret The Tebex's secret key (The server secret key)
+     * @throws TebexException If the Secret key is not valid
      */
 
-    public TebexApi(String secret) throws BuycraftException {
+    public TebexApi(String secret) throws TebexException {
         if (secret == null || secret.length() != 40){
-            throw new BuycraftException("The secret key is not valid");
+            throw new TebexException("The secret key is not valid");
         }
 
         setSecure(true);
@@ -87,7 +87,7 @@ public class TebexApi {
             String anaKey = JsonUtils.safeGetString(analytics, "key");
 
             return new Information(new Account(account, currency), serverId, serverName, projectAna, anaKey);
-        } catch (BuycraftException e){
+        } catch (TebexException e){
             e.printStackTrace();
         }
 
@@ -107,7 +107,7 @@ public class TebexApi {
 
             JSONArray catArray = JsonUtils.safeGetArray(obj, "categories");
             return loopCategory(catArray);
-        } catch (BuycraftException e){
+        } catch (TebexException e){
             e.printStackTrace();
         }
 
@@ -183,7 +183,7 @@ public class TebexApi {
             JSONObject meta = JsonUtils.safeGetObject(obj, "meta");
 
             return new PlayerQueue(JsonUtils.safeGetBoolean(meta, "execute_offline"), JsonUtils.safeGetInt(obj, "next_check"), JsonUtils.safeGetBoolean(obj, "more"));
-        } catch (BuycraftException e){
+        } catch (TebexException e){
             e.printStackTrace();
         }
 
@@ -208,7 +208,7 @@ public class TebexApi {
             }
 
             return offlineCommands;
-        } catch (BuycraftException e){
+        } catch (TebexException e){
             e.printStackTrace();
         }
 
@@ -234,7 +234,7 @@ public class TebexApi {
 
     /**
      * Gets a list of the latest payments in a {@link Payment} package way
-     * @param limit The number of {@link Payment}s to retrieve. Buycraft limits this to 100
+     * @param limit The number of {@link Payment}s to retrieve. Tebex limits this to 100
      * @return {@link Set<Payment>} containing all the payments
      */
 
@@ -251,7 +251,7 @@ public class TebexApi {
             }
 
             return paymentSet;
-        } catch (BuycraftException e){
+        } catch (TebexException e){
             e.printStackTrace();
         }
 
@@ -300,17 +300,17 @@ public class TebexApi {
         return map;
     }
 
-    private void checkError(JSONObject obj) throws BuycraftException {
+    private void checkError(JSONObject obj) throws TebexException {
         if (obj == null){
-            throw new BuycraftException("Couldn't connect to the Buycraft API");
+            throw new TebexException("Couldn't connect to the Tebex API");
         }
         if (JsonUtils.safeGetInt(obj, "error_code", false)!=null){
-            throw new BuycraftException(JsonUtils.safeGetString(obj, "error_message"));
+            throw new TebexException(JsonUtils.safeGetString(obj, "error_message"));
         }
     }
 
     /**
-     * Utility method to parse Buycraft's date objects
+     * Utility method to parse Tebex's date objects
      * @param string The string to parse
      * @return A Date with the parsed string data or a "0" Date
      */

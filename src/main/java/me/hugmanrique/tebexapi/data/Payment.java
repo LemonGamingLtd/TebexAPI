@@ -1,6 +1,6 @@
-package me.hugmanrique.buycraftapi.data;
+package me.hugmanrique.tebexapi.data;
 
-import me.hugmanrique.buycraftapi.TebexApi;
+import me.hugmanrique.tebexapi.TebexApi;
 
 import java.util.Date;
 import java.util.Map;

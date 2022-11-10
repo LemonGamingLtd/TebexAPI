@@ -1,4 +1,4 @@
-package me.hugmanrique.buycraftapi.data;
+package me.hugmanrique.tebexapi.data;
 
 /**
  * Created by HugmanriqueMC. All Rights Reserved

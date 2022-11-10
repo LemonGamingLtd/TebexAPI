@@ -1,6 +1,6 @@
-package me.hugmanrique.buycraftapi.data;
+package me.hugmanrique.tebexapi.data;
 
-import me.hugmanrique.buycraftapi.utils.JsonUtils;
+import me.hugmanrique.tebexapi.utils.JsonUtils;
 import org.json.JSONObject;
 
 /**

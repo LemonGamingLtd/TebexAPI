@@ -1,6 +1,4 @@
-package me.hugmanrique.buycraftapi.data;
-
-import org.jetbrains.annotations.Nullable;
+package me.hugmanrique.tebexapi.data;
 
 /**
  * Created by HugmanriqueMC. All Rights Reserved
