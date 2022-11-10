@@ -26,9 +26,11 @@ public class Payment {
     private String playerName;
     private UUID playerUuid;
 
+    private Status status;
+
     private Map<Integer, String> packages;
 
-    public Payment(int id, double amount, Date date, String currency, String currencySymbol, int playerId, String playerName, UUID playerUuid, Map<Integer, String> packages) {
+    public Payment(int id, double amount, Date date, String currency, String currencySymbol, int playerId, String playerName, UUID playerUuid, Status status, Map<Integer, String> packages) {
         this.id = id;
         this.date = date;
         this.amount = amount;
@@ -37,6 +39,7 @@ public class Payment {
         this.playerId = playerId;
         this.playerName = playerName;
         this.playerUuid = playerUuid;
+        this.status = status;
         this.packages = packages;
     }
 
@@ -77,6 +80,10 @@ public class Payment {
         return date;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     /**
      * Gets a {@link Map} with all the bought ids as keys and names as values
      * @return A map containing all the {@link Package} ids and names
@@ -85,5 +92,14 @@ public class Payment {
 
     public Map<Integer, String> getPackages() {
         return packages;
+    }
+
+    public enum Status {
+
+        COMPLETE,
+        REFUNDED,
+        DECLINED,
+        UNKNOWN
+
     }
 }

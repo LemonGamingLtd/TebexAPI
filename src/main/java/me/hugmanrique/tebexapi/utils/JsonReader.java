@@ -30,7 +30,7 @@ public class JsonReader {
     public static JSONObject readJsonFromUrl(String direction, String key, boolean array) throws IOException, JSONException {
         URL url = new URL(direction);
         URLConnection con = url.openConnection();
-        con.setRequestProperty("X-Buycraft-Secret", key);
+        con.setRequestProperty("X-Tebex-Secret", key);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), Charset.forName("UTF-8")))) {
             String jsonText = readAll(reader);

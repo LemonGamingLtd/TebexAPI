@@ -2,9 +2,11 @@ package me.hugmanrique.tebexapi;
 
 import me.hugmanrique.tebexapi.data.*;
 import me.hugmanrique.tebexapi.data.Package;
+import me.hugmanrique.tebexapi.data.Payment.Status;
 import me.hugmanrique.tebexapi.exception.TebexException;
 import me.hugmanrique.tebexapi.utils.JsonReader;
 import me.hugmanrique.tebexapi.utils.JsonUtils;
+import org.apache.commons.lang3.EnumUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -273,9 +275,12 @@ public class TebexApi {
         String uuidString = JsonUtils.safeGetString(playerObj, "uuid");
         UUID uuid = parseUuid(uuidString);
 
+        String statusString = JsonUtils.safeGetString(obj, "status");
+        Payment.Status status = EnumUtils.getEnum(Payment.Status.class, statusString, Status.UNKNOWN);
+
         JSONArray packages = JsonUtils.safeGetArray(obj, "packages");
 
-        return new Payment(id, amount, date, currency, currencySymbol, playerId, playerName, uuid, getBoughtPackages(packages));
+        return new Payment(id, amount, date, currency, currencySymbol, playerId, playerName, uuid, status, getBoughtPackages(packages));
     }
 
     private UUID parseUuid(String text) {
@@ -327,7 +332,7 @@ public class TebexApi {
      */
 
     public void setSecure(boolean secure){
-        url = "http" + (secure ? "s" : "") + "://plugin.buycraft.net";
+        url = "http" + (secure ? "s" : "") + "://plugin.tebex.io";
     }
 
     public static <T> T filterAndGet(Stream<T> stream, Predicate<T> predicate){
