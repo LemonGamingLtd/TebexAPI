@@ -12,11 +12,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
@@ -27,19 +24,19 @@ import java.util.stream.Stream;
  * @author Hugmanrique
  *         Spigot. Created the 14/05/2016.
  **/
-public class BuycraftApi {
+public class TebexApi {
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddHH:mm:ssX", Locale.ENGLISH);;
 
     private static String url;
     private String secret;
 
     /**
-     * Creates a new instance of {@link BuycraftApi}
+     * Creates a new instance of {@link TebexApi}
      * @param secret The Buycraft's secret key (The server secret key)
      * @throws BuycraftException If the Secret key is not valid
      */
 
-    public BuycraftApi(String secret) throws BuycraftException {
+    public TebexApi(String secret) throws BuycraftException {
         if (secret == null || secret.length() != 40){
             throw new BuycraftException("The secret key is not valid");
         }

@@ -1,6 +1,6 @@
 package me.hugmanrique.buycraftapi.data;
 
-import me.hugmanrique.buycraftapi.BuycraftApi;
+import me.hugmanrique.buycraftapi.TebexApi;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -80,18 +80,18 @@ public class Category {
     }
 
     public Package getPackage(int id){
-        return BuycraftApi.filterAndGet(packages.stream(), pack -> id==pack.getId());
+        return TebexApi.filterAndGet(packages.stream(), pack -> id==pack.getId());
     }
 
     public Package getPackage(String name){
-        return BuycraftApi.filterAndGet(packages.stream(), pack -> name.equals(pack.getName()));
+        return TebexApi.filterAndGet(packages.stream(), pack -> name.equals(pack.getName()));
     }
 
     public Category getSubCategory(int id){
-        return BuycraftApi.filterAndGet(subCategories.stream(), category -> id==category.getId());
+        return TebexApi.filterAndGet(subCategories.stream(), category -> id==category.getId());
     }
 
     public Category getSubCategory(String name){
-        return BuycraftApi.filterAndGet(subCategories.stream(), category -> name.equals(category.getName()));
+        return TebexApi.filterAndGet(subCategories.stream(), category -> name.equals(category.getName()));
     }
 }

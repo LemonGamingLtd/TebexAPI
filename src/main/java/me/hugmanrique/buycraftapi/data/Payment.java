@@ -1,6 +1,6 @@
 package me.hugmanrique.buycraftapi.data;
 
-import me.hugmanrique.buycraftapi.BuycraftApi;
+import me.hugmanrique.buycraftapi.TebexApi;
 
 import java.util.Date;
 import java.util.Map;
@@ -80,7 +80,7 @@ public class Payment {
     /**
      * Gets a {@link Map} with all the bought ids as keys and names as values
      * @return A map containing all the {@link Package} ids and names
-     * @see {@link BuycraftApi#getListing()} To get the information of a {@link Package} id
+     * @see {@link TebexApi#getListing()} To get the information of a {@link Package} id
      */
 
     public Map<Integer, String> getPackages() {
