@@ -27,7 +27,7 @@ import java.util.stream.Stream;
  *         Spigot. Created the 14/05/2016.
  **/
 public class TebexApi {
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-ddHH:mm:ssX", Locale.ENGLISH);
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.ENGLISH);
 
     private static String url;
     private String secret;
@@ -320,7 +320,7 @@ public class TebexApi {
 
     private Date parseDate(String string) {
         try {
-            return DATE_FORMAT.parse(string.replace("T", ""));
+            return DATE_FORMAT.parse(string);
         } catch (ParseException e) {
             return new Date(0);
         }
