@@ -276,7 +276,7 @@ public class TebexApi {
         UUID uuid = parseUuid(uuidString);
 
         String statusString = JsonUtils.safeGetString(obj, "status");
-        Payment.Status status = EnumUtils.getEnum(Payment.Status.class, statusString, Status.UNKNOWN);
+        Payment.Status status = EnumUtils.getEnum(Payment.Status.class, statusString.toUpperCase(), Status.UNKNOWN);
 
         JSONArray packages = JsonUtils.safeGetArray(obj, "packages");
 
