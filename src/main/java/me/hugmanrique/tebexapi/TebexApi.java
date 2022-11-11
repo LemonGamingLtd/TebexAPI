@@ -259,6 +259,39 @@ public class TebexApi {
         return null;
     }
 
+    /**
+     * Gets a list of the latest payments in a {@link Payment} package way
+     * @param page The page number to return
+     * @return {@link PagedResult<Payment>} containing the page payments
+     */
+
+    public PagedResult<Payment> getPaymentsPaged(int page) {
+        try {
+            JSONObject obj = jsonGet("/payments?paged=1&page=" + page);
+            checkError(obj);
+
+            int totalResults = JsonUtils.safeGetInt(obj, "total");
+            int resultsPerPage = JsonUtils.safeGetInt(obj, "per_page");
+            int currentPage = JsonUtils.safeGetInt(obj, "current_page");
+            int totalPages = JsonUtils.safeGetInt(obj, "last_page");
+            int indexFrom = JsonUtils.safeGetInt(obj, "from");
+            int indexTo = JsonUtils.safeGetInt(obj, "to");
+
+            JSONArray payments = JsonUtils.safeGetArray(obj, "data");
+            List<Payment> paymentList = new ArrayList<>();
+
+            for (int i = 0; i<(payments==null ? 0 : payments.length()); i++){
+                paymentList.add(parsePayment(JsonUtils.safeGetObject(payments, i)));
+            }
+
+            return new PagedResult<>(paymentList, resultsPerPage, currentPage, totalResults, totalPages, indexFrom, indexTo);
+        } catch (TebexException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     private Payment parsePayment(JSONObject obj){
         int id = JsonUtils.safeGetInt(obj, "id");
         double amount = Double.parseDouble(JsonUtils.safeGetString(obj, "amount"));
@@ -342,4 +375,5 @@ public class TebexApi {
             return null;
         }
     }
+
 }
