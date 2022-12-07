@@ -25,7 +25,7 @@ Get 10 latest people that bought a package and how much they payed:
 
 ```java
 try {
-	TebexApi api = new TebexApi("YOUR_API_KEY");
+    TebexApi api = new TebexApi("YOUR_API_KEY");
     Set<Payment> latest = api.getLatestPayments(10);
     
     for (Payment payment : latest){
