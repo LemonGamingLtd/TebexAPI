@@ -12,4 +12,8 @@ public class TebexException extends Exception {
     public TebexException(String message){
         super(message);
     }
+
+    public TebexException(String message, Exception e) {
+        super(message, e);
+    }
 }

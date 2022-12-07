@@ -7,6 +7,8 @@ import me.hugmanrique.tebexapi.exception.TebexException;
 import me.hugmanrique.tebexapi.utils.JsonReader;
 import me.hugmanrique.tebexapi.utils.JsonUtils;
 import org.apache.commons.lang3.EnumUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -47,20 +49,16 @@ public class TebexApi {
         this.secret = secret;
     }
 
-    private JSONObject jsonGet(String path){
-        try {
-            return JsonReader.readJsonFromUrl(url + path, secret, false);
-        } catch (IOException ignored) {}
-
-        return null;
+    private JSONObject jsonGet(String path) throws TebexException {
+        return JsonReader.readJsonFromUrlGet(url + path, secret, false);
     }
 
-    private JSONObject jsonArrayGet(String path){
-        try {
-            return JsonReader.readJsonFromUrl(url + path, secret, true);
-        } catch (IOException ignored){}
+    private JSONObject jsonArrayGet(String path) throws TebexException {
+        return JsonReader.readJsonFromUrlGet(url + path, secret, true);
+    }
 
-        return null;
+    private JSONObject jsonPost(String path, JSONObject post) throws TebexException {
+        return JsonReader.readJsonFromUrlPost(url + path, secret, false, post);
     }
 
     /**
@@ -290,6 +288,43 @@ public class TebexApi {
         }
 
         return null;
+    }
+
+    public GiftCard getGiftCard(int giftCardId) throws TebexException {
+        JSONObject obj = jsonGet("/gift-cards/" + giftCardId);
+        checkError(obj);
+
+        JSONObject data = JsonUtils.safeGetObject(obj, "data");
+
+        if (data == null) {
+            return null;
+        }
+
+        JSONObject balance = JsonUtils.safeGetObject(data, "balance");
+        double starting = Double.parseDouble(JsonUtils.safeGetString(balance, "starting"));
+        double remaining = Double.parseDouble(JsonUtils.safeGetString(balance, "remaining"));
+
+        return new GiftCard(giftCardId, JsonUtils.safeGetString(data, "code"), starting, remaining);
+    }
+
+    @NotNull
+    public GiftCard createGiftCard(double amount) throws TebexException {
+        return createGiftCard(amount, null);
+    }
+
+    @NotNull
+    public GiftCard createGiftCard(double amount, @Nullable String note) throws TebexException {
+        JSONObject req = new JSONObject();
+        req.append("amount", amount);
+        if (note != null) {
+            req.append("note", note);
+        }
+
+        JSONObject obj = jsonPost("/gift-cards", req);
+        checkError(obj);
+
+        JSONObject main = JsonUtils.safeGetObject(obj, "data");
+        return new GiftCard(JsonUtils.safeGetInt(main, "id"), JsonUtils.safeGetString(main, "code"), amount, amount);
     }
 
     private Payment parsePayment(JSONObject obj){
