@@ -315,9 +315,9 @@ public class TebexApi {
     @NotNull
     public GiftCard createGiftCard(double amount, @Nullable String note) throws TebexException {
         JSONObject req = new JSONObject();
-        req.append("amount", amount);
+        req.put("amount", amount);
         if (note != null) {
-            req.append("note", note);
+            req.put("note", note);
         }
 
         JSONObject obj = jsonPost("/gift-cards", req);
